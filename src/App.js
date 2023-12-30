@@ -1,6 +1,6 @@
 import { Checkbox, Radio, Space, Table } from "antd";
 import "./App.css";
-import app_logo from "./asset/Daco_3261784.png";
+import app_logo from "./asset/logo.png";
 import { useState } from "react";
 
 const dataSource = [
@@ -134,9 +134,7 @@ function App() {
             <h2 className="font-bold text-lg py-2">Vehicle type/model</h2>
             <Space direction="vertical gap-3">
               <Checkbox value={1}>Cars</Checkbox>
-              <Checkbox value={2}>Trucks</Checkbox>
-              <Checkbox value={3}>Motorbikes</Checkbox>
-              <Checkbox value={4}>Running</Checkbox>
+              <Checkbox value={2}>Motorbikes</Checkbox>
             </Space>
           </div>
         </div>
@@ -144,10 +142,10 @@ function App() {
       <div className="w-10/12 h-screen flex">
         <div className="w-1/2 h-screen flex flex-col">
           <div className="h-1/2 w-full bg-slate-200 px-4 pb-2 flex flex-col">
-            <span className="text-center py-1 font-semibold text-gray-700">
+            <span className="py-1 font-semibold text-gray-700 text-sm">
               Vehicle Details
             </span>
-            <div className="w-full h-full bg-slate-400 rounded-md flex flex-col p-8">
+            <div className="w-full h-full bg-slate-400 rounded-md flex flex-col p-2">
               {selectedVehicle ? (
                 <>
                   <div className="flex items-center border-b pb-8">
@@ -210,7 +208,7 @@ function App() {
           </div>
 
           <div className="h-1/2 w-full bg-slate-200 px-4 pb-4 flex flex-col">
-            <span className="text-center py-1 font-semibold text-gray-700">
+            <span className="py-1 font-semibold text-gray-700 text-sm">
               Camera Video
             </span>
             <div className="w-full h-full bg-slate-400 rounded-md">
@@ -225,7 +223,7 @@ function App() {
           </div>
         </div>
         <div className="w-1/2 h-screen bg-slate-200 px-4 pb-4 flex flex-col">
-          <span className="text-center py-1 font-semibold text-gray-700">
+          <span className="py-1 font-semibold text-gray-700 text-sm">
             Vehicle List
           </span>
           <div className="w-full h-full bg-slate-400 rounded-md overflow-y-auto">
