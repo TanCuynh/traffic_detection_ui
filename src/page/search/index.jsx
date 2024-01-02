@@ -1,23 +1,42 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import app_logo from '../../asset/logo.png';
+import license_icon from '../../asset/license_icon.png';
 import detected_image from '../../asset/frame.png';
-import { Checkbox, Radio, Space, Table } from 'antd';
+import { Checkbox, DatePicker, Input, InputNumber, Radio, Slider, Space, Table, TimePicker } from 'antd';
 import { FaMapMarkerAlt, FaCar } from "react-icons/fa";
-import { IoMdSearch } from "react-icons/io";
+import { IoMdSearch, IoIosSpeedometer } from "react-icons/io";
 import { HiVideoCamera } from "react-icons/hi";
+import { BiSolidCreditCardFront } from "react-icons/bi";
 import { columns, dataSource } from '../../const';
 
 
 function MainPage() {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  const [licensePlate, setLicensePlate] = useState("");
+
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const navigate = useNavigate();
-  const handleRowClick = (record) => {
-    setSelectedVehicle(record);
-  };
+
   const handleDetectionPageClick = () => {
     navigate('/');
   };
+
+  const handleRowClick = (record) => {
+    setSelectedVehicle(record);
+  };
+
+  const handleLicensePlateChange = (e) => {
+    setLicensePlate(e.target.value.toUpperCase());
+  }
+
+  const handleDateChange = (date, dateString) => {
+    setSelectedDate(dateString);
+  };
+
+
   return (
     <div className="flex">
       <div className="w-2/12 h-screen bg-slate-300 px-4 py-2">
@@ -28,28 +47,77 @@ function MainPage() {
           </div>
         </div>
         <div className="w-full h-fit bg-slate-400 rounded-lg p-4">
+          {/* Location */}
           <div className="border-slate-500">
             <div className="flex justify-start items-center gap-2 pb-2">
               <FaMapMarkerAlt fontSize={20} />
-              <h2 className="font-bold text-lg">Location</h2>
+              <h2 className="font-bold text-md">Location</h2>
             </div>
-            <Radio.Group>
+            <Radio.Group defaultValue={1} disabled>
               <Space direction="vertical gap-3">
-                <Radio value={1} defaultChecked={true}>Danang</Radio>
+                <Radio value={1}>Danang</Radio>
                 <Radio value={2}>Hanoi</Radio>
                 <Radio value={3}>Ho Chi Minh City</Radio>
               </Space>
             </Radio.Group>
           </div>
-          <div className="border-slate-500 pt-8">
+          {/* Vehicle type */}
+          <div className="border-slate-500 pt-3">
             <div className="flex justify-start items-center gap-2">
               <FaCar fontSize={20} />
-              <h2 className="font-bold text-lg py-2">Vehicle type/model</h2>
+              <h2 className="font-bold text-md py-2">Vehicle Type</h2>
             </div>
             <Space direction="vertical gap-3">
-              <Checkbox value={1}>Cars</Checkbox>
-              <Checkbox value={2}>Motorcycles</Checkbox>
+              <Checkbox defaultChecked>Cars</Checkbox>
+              <Checkbox>Motorcycles</Checkbox>
             </Space>
+          </div>
+          {/* License Plate */}
+          <div className="border-slate-500 pt-3">
+            <div className="flex justify-start items-center gap-2">
+              <BiSolidCreditCardFront fontSize={20} />
+              <h2 className="font-bold text-md py-2">License Plate</h2>
+            </div>
+            <Input
+              value={licensePlate}
+              className='h-[34px] w-[200px] mt-2'
+              placeholder='Enter license plate'
+              onChange={handleLicensePlateChange}
+            />
+          </div>
+          {/* Vehicle Speed */}
+          <div className="border-slate-500 pt-3">
+            <div className="flex justify-start items-center gap-2">
+              <IoIosSpeedometer fontSize={20} />
+              <h2 className="font-bold text-md py-2">Vehicle Speed</h2>
+            </div>
+            <div className="flex items-center gap-1 mt-2">
+              <InputNumber
+                className='w-[60px]'
+                min={0}
+                max={200}
+                defaultValue={0}
+              />
+              <p className='font-semibold'>-</p>
+              <InputNumber
+                className='w-[60px]'
+                min={0}
+                max={200}
+                defaultValue={200}
+              />
+              <p className='font-bold ml-2'>km/h</p>
+            </div>
+          </div>
+          {/* Time stamp */}
+          <div className="border-slate-500 pt-3">
+            <div className="flex justify-start items-center gap-2">
+              <IoIosSpeedometer fontSize={20} />
+              <h2 className="font-bold text-md py-2">Time Stamp</h2>
+            </div>
+            <div className="flex flex-col gap-4 mt-2">
+              <DatePicker.RangePicker onChange={handleDateChange} />
+              <TimePicker.RangePicker />
+            </div>
           </div>
           <div className="w-full h-fit bg-slate-600 rounded-lg text-white cursor-pointer hover:bg-slate-700 p-3 mt-8">
             <div className="border-slate-500 flex justify-start items-center gap-3 text-center pl-2">
@@ -130,7 +198,7 @@ function MainPage() {
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <p className="text-lg font-semibold text-gray-700">
-                    Click on a vehicle from the Vehicle List to show the detail!
+                    Click on a record from the Vehicle List to show the detail!
                   </p>
                 </div>
               )}
@@ -148,7 +216,7 @@ function MainPage() {
               <>
                 <div className="w-full h-full bg-slate-400 rounded-md flex items-center justify-center">
                   <p className="text-lg font-semibold text-gray-700">
-                    Click on a vehicle from the Vehicle List to show the detected image!
+                    Click on a record from the Vehicle List to show the detected image!
                   </p>
                 </div>
               </>
