@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import app_logo from '../../asset/logo.png';
-import license_icon from '../../asset/license_icon.png';
 import detected_image from '../../asset/frame.png';
 import { Checkbox, DatePicker, Input, InputNumber, Radio, Slider, Space, Table, TimePicker } from 'antd';
-import { FaMapMarkerAlt, FaCar } from "react-icons/fa";
+import { FaMapMarkerAlt, FaCar, FaClock } from "react-icons/fa";
 import { IoMdSearch, IoIosSpeedometer } from "react-icons/io";
 import { HiVideoCamera } from "react-icons/hi";
 import { BiSolidCreditCardFront } from "react-icons/bi";
 import { columns, dataSource } from '../../const';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function MainPage() {
@@ -24,7 +24,17 @@ function MainPage() {
     navigate('/');
   };
 
-  const handleRowClick = (record) => {
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 3000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'light',
+  };
+  // toast.error(data.message, toastOptions);
+
+  const handleRecordClick = (record) => {
+    toast.success('Record Opened!', toastOptions);
     setSelectedVehicle(record);
   };
 
@@ -53,7 +63,7 @@ function MainPage() {
               <FaMapMarkerAlt fontSize={20} />
               <h2 className="font-bold text-md">Location</h2>
             </div>
-            <Radio.Group defaultValue={1} disabled>
+            <Radio.Group defaultValue={1}>
               <Space direction="vertical gap-3">
                 <Radio value={1}>Danang</Radio>
                 <Radio value={2}>Hanoi</Radio>
@@ -68,20 +78,20 @@ function MainPage() {
               <h2 className="font-bold text-md py-2">Vehicle Type</h2>
             </div>
             <Space direction="vertical gap-3">
-              <Checkbox defaultChecked>Cars</Checkbox>
-              <Checkbox>Motorcycles</Checkbox>
+              <Checkbox defaultChecked>Car</Checkbox>
+              <Checkbox>Motorcycle</Checkbox>
             </Space>
           </div>
           {/* License Plate */}
           <div className="border-slate-500 pt-3">
             <div className="flex justify-start items-center gap-2">
               <BiSolidCreditCardFront fontSize={20} />
-              <h2 className="font-bold text-md py-2">License Plate</h2>
+              <h2 className="font-bold text-md py-2">License Plate Number</h2>
             </div>
             <Input
               value={licensePlate}
               className='h-[34px] w-[200px] mt-2'
-              placeholder='Enter license plate'
+              placeholder='Enter license plate number'
               onChange={handleLicensePlateChange}
             />
           </div>
@@ -111,7 +121,7 @@ function MainPage() {
           {/* Time stamp */}
           <div className="border-slate-500 pt-3">
             <div className="flex justify-start items-center gap-2">
-              <IoIosSpeedometer fontSize={20} />
+              <FaClock fontSize={20} />
               <h2 className="font-bold text-md py-2">Time Stamp</h2>
             </div>
             <div className="flex flex-col gap-4 mt-2">
@@ -144,7 +154,7 @@ function MainPage() {
               pagination={false}
               onRow={(record) => {
                 return {
-                  onClick: () => handleRowClick(record),
+                  onClick: () => handleRecordClick(record),
                 };
               }}
             />
@@ -156,34 +166,44 @@ function MainPage() {
             <div className="w-full h-full bg-slate-400 rounded-md flex flex-col p-2">
               {selectedVehicle ? (
                 <>
-                  <div className="flex items-center border-b pb-8">
-                    <div className="w-1/2">
-                      <img className="w-fit h-24" src={selectedVehicle.license_img} alt="license_img" />
+                  <div className="flex flex-col">
+                    <div className='pb-4'>
+                      <p className="font-bold"> License Plate</p>
                     </div>
-                    <input type="text" value="29D01245" readOnly className="p-2 rounded-md focus:outline-none hover:pointer-none" />
+                    <div className="flex items-center border-b pb-8">
+                      <div className="w-1/2">
+                        <img className="w-fit h-24" src={selectedVehicle.license_img} alt="license_img" />
+                      </div>
+                      <input
+                        type="text"
+                        value="29D01245"
+                        readOnly
+                        className="p-2 rounded-md focus:outline-none hover:pointer-none"
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center border-b py-2">
                     <div className="w-1/2">
-                      <p className="font-bold">Vehicle speed</p>
+                      <p className="font-bold">Vehicle Speed</p>
                     </div>
                     <div>
-                      <p>{selectedVehicle.speed}</p>
+                      <p>{selectedVehicle.speed} km/h</p>
                     </div>
                   </div>
                   <div className="flex items-center border-b py-2">
                     <div className="w-1/2">
-                      <p className="font-bold">Time stamp</p>
+                      <p className="font-bold">Vehicle Type</p>
+                    </div>
+                    <div>
+                      <p>Car</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center border-b py-2">
+                    <div className="w-1/2">
+                      <p className="font-bold">Time Stamp</p>
                     </div>
                     <div>
                       <p>{selectedVehicle.time}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center border-b py-2">
-                    <div className="w-1/2">
-                      <p className="font-bold">Vehicle type/model</p>
-                    </div>
-                    <div>
-                      <p>Cars</p>
                     </div>
                   </div>
                   <div className="flex items-center border-b py-2">
@@ -224,6 +244,7 @@ function MainPage() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

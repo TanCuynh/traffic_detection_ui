@@ -4,7 +4,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '69',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -12,7 +12,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '70',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -20,7 +20,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '71',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -28,7 +28,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '72',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -36,7 +36,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '73',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -44,7 +44,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '74',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -52,7 +52,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '75',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
   {
@@ -60,7 +60,7 @@ const dataSource = [
     license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
     license_num: '29D01245',
     speed: '76',
-    time: '11:11:11 11/11/2011',
+    time: '11/11/2011 11:11:11',
     detected_img: 'src/asset/frame.png',
   },
 ];

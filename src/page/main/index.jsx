@@ -1,21 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import app_logo from '../../asset/logo.png';
-import { Table } from 'antd';
-import { FaInfoCircle } from "react-icons/fa";
-import { IoMdSearch } from "react-icons/io";
-import { MdOutlineUpdate } from "react-icons/md";
+import { FaInfoCircle, FaMapMarkerAlt, FaRegStopCircle, FaStopCircle } from 'react-icons/fa';
+import { IoMdSearch } from 'react-icons/io';
+import { MdOutlineUpdate } from 'react-icons/md';
+import { Radio, Space, Table } from 'antd';
 import { columns, dataSource } from '../../const';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import noSignalImage from '../../asset/no_signal.jpg';
 
 function MainPage() {
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
   const navigate = useNavigate();
-  const handleRowClick = (record) => {
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [imgSrc, setImgSrc] = useState(noSignalImage);
+
+  const handleRecordClick = (record) => {
+    toast.success('Record Opened!', toastOptions);
     setSelectedVehicle(record);
   };
+
   const handleAdvancedSearchClick = () => {
     navigate('/search');
+  };
+
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  const handleLocationChange = (e) => {
+    setSelectedValue(e.target.value);
+    setImgSrc(`${process.env.REACT_APP_API_ENDPOINT}/${e.target.value}/video_feed`);
+  };
+
+  useEffect(() => {
+    console.log(selectedValue);
+  }, [selectedValue]);
+
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 3000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'light',
+  };
+  // toast.error(data.message, toastOptions);
+
+  const handleStream = () => {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/clear_stream`, {
+      method: 'POST',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+      });
+
+    setImgSrc(noSignalImage);
   };
   return (
     <div className="flex">
@@ -30,22 +68,50 @@ function MainPage() {
           <div className="border-slate-500">
             <div className="flex justify-start items-center gap-2 pb-2">
               <FaInfoCircle fontSize={20} />
-              <h2 className="font-bold text-lg">Introduction</h2>
+              <h2 className="font-bold text-md">Introduction</h2>
             </div>
             <p>
-              This website is a project developed by our team, designed to identify vehicles, read license plates, and determine vehicle speed through traffic surveillance cameras.
-              <br />This is a pilot project, and we hope that the product will fulfill the basic requirements for practical applications.
+              This website is a project developed by our team, designed to identify vehicles, read license plates, and
+              determine vehicle speed through traffic surveillance cameras.
+              <br />
+              This is a pilot project, and we hope that the product will fulfill the basic requirements for practical
+              applications.
             </p>
           </div>
-          <div className="w-full h-fit bg-slate-600 rounded-lg text-white cursor-pointer hover:bg-slate-700 p-3 mt-8">
+        </div>
+
+        <div className="w-full h-fit bg-slate-400 rounded-lg p-4 my-2">
+          <div className="border-slate-500">
+            <div className="flex justify-start items-center gap-2 pb-2">
+              <FaMapMarkerAlt fontSize={22} />
+              <h2 className="font-bold text-md">Location</h2>
+            </div>
+
+            <Radio.Group onChange={handleLocationChange}>
+              <Space direction="vertical gap-3">
+                <Radio value={1}>Danang</Radio>
+                <Radio value={2}>Hanoi</Radio>
+                <Radio value={3}>Ho Chi Minh City</Radio>
+              </Space>
+            </Radio.Group>
+          </div>
+          <div className="w-full h-fit bg-[#b42626] rounded-lg text-white cursor-pointer hover:bg-[#902e2e] p-3 mt-6" onClick={handleStream}>
             <div className="border-slate-500 flex justify-start items-center gap-3 text-center pl-2">
-              <MdOutlineUpdate fontSize={22} />
+              <FaRegStopCircle fontSize={18} />
+              <h2 className="font-medium text-md">Stop Detecting</h2>
+            </div>
+          </div>
+          <div className="w-full h-fit bg-slate-600 rounded-lg text-white cursor-pointer hover:bg-slate-700 p-3 mt-4">
+            <div className="border-slate-500 flex justify-start items-center gap-3 text-center pl-2">
+              <MdOutlineUpdate fontSize={20} />
               <h2 className="font-medium text-md">Update Vehicle List</h2>
             </div>
           </div>
         </div>
-
-        <div onClick={handleAdvancedSearchClick} className="w-full h-fit bg-slate-700 rounded-lg text-white cursor-pointer hover:bg-slate-800 p-3 mt-4">
+        <div
+          onClick={handleAdvancedSearchClick}
+          className="w-full h-fit bg-slate-700 rounded-lg text-white cursor-pointer hover:bg-slate-800 p-3 mt-2"
+        >
           <div className="border-slate-500 flex justify-start items-center gap-4 text-center pl-2">
             <IoMdSearch fontSize={22} />
             <h2 className="font-medium text-md">Advanced Search Page</h2>
@@ -59,34 +125,44 @@ function MainPage() {
             <div className="w-full h-full bg-slate-400 rounded-md flex flex-col p-2">
               {selectedVehicle ? (
                 <>
-                  <div className="flex items-center border-b pb-8">
-                    <div className="w-1/2">
-                      <img className="w-fit h-24" src={selectedVehicle.license_img} alt="license_img" />
+                  <div className="flex flex-col">
+                    <div className='pb-4'>
+                      <p className="font-bold"> License Plate</p>
                     </div>
-                    <input type="text" value="29D01245" readOnly className="p-2 rounded-md focus:outline-none hover:pointer-none" />
+                    <div className="flex items-center border-b pb-8">
+                      <div className="w-1/2">
+                        <img className="w-fit h-24" src={selectedVehicle.license_img} alt="license_img" />
+                      </div>
+                      <input
+                        type="text"
+                        value="29D01245"
+                        readOnly
+                        className="p-2 rounded-md focus:outline-none hover:pointer-none"
+                      />
+                    </div>
                   </div>
                   <div className="flex items-center border-b py-2">
                     <div className="w-1/2">
-                      <p className="font-bold">Vehicle speed</p>
+                      <p className="font-bold">Vehicle Speed</p>
                     </div>
                     <div>
-                      <p>{selectedVehicle.speed}</p>
+                      <p>{selectedVehicle.speed} km/h</p>
                     </div>
                   </div>
                   <div className="flex items-center border-b py-2">
                     <div className="w-1/2">
-                      <p className="font-bold">Time stamp</p>
+                      <p className="font-bold">Vehicle Type</p>
+                    </div>
+                    <div>
+                      <p>Car</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center border-b py-2">
+                    <div className="w-1/2">
+                      <p className="font-bold">Time Stamp</p>
                     </div>
                     <div>
                       <p>{selectedVehicle.time}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center border-b py-2">
-                    <div className="w-1/2">
-                      <p className="font-bold">Vehicle type/model</p>
-                    </div>
-                    <div>
-                      <p>Cars</p>
                     </div>
                   </div>
                   <div className="flex items-center border-b py-2">
@@ -109,9 +185,11 @@ function MainPage() {
           </div>
 
           <div className="h-1/2 w-full bg-slate-200 px-4 pb-4 flex flex-col">
-            <span className="py-1 font-semibold text-gray-700 text-sm">Camera Video</span>
-            <div className="w-full h-full bg-slate-400 rounded-md">
-              <img src="http://127.0.0.1:5000/video_feed" alt="Video Feed" />
+            <div className="flex flex-row justify-between my-1">
+              <span className="py-1 font-semibold text-gray-700 text-sm">Camera Video</span>
+            </div>
+            <div className="w-full bg-slate-400 rounded-md flex justify-center">
+              <img src={imgSrc} alt="Video Feed" className="h-[380px] w-fit" />
             </div>
           </div>
         </div>
@@ -124,13 +202,14 @@ function MainPage() {
               pagination={false}
               onRow={(record) => {
                 return {
-                  onClick: () => handleRowClick(record),
+                  onClick: () => handleRecordClick(record),
                 };
               }}
             />
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
