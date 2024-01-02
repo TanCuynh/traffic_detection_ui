@@ -101,7 +101,7 @@ function MainPage() {
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <p className="text-lg font-semibold text-gray-700">
-                    Click on a vehicle from the Vehicle List to show the detail!
+                    Click on a record from the Vehicle List to show the detail!
                   </p>
                 </div>
               )}
