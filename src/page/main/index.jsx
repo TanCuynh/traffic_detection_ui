@@ -62,7 +62,7 @@ function MainPage() {
   };
 
   const handleUpdateDatabase = () => {
-    fetch(`${process.env.REACT_APP_API_ENDPOINT}/push_into_db`, {
+    fetch(`http://127.0.0.1:5000/push_into_db`, {
       method: 'POST',
     })
       .then((response) => response.json())
