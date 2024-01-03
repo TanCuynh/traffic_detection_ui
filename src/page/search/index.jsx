@@ -24,7 +24,6 @@ function SearchPage() {
   const [timeRange, setTimeRange] = useState(['', '']);
   const [hideNotDetected, setHideNotDetected] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState(null);
 
   const navigate = useNavigate();
 
@@ -78,12 +77,10 @@ function SearchPage() {
         } else if (data.data === "Don't have record") {
           console.log("No records found");
           toast.error("No records found", toastOptions);
-
         }
         else {
           setDataSource(data.data); // Store the rows in state
         }
-
 
       })
       .catch((error) => {
@@ -95,6 +92,8 @@ function SearchPage() {
   if (hideNotDetected) {
     filteredData = dataSource.filter((record) => record.speed !== 'Not Detected');
   }
+  const sortedDataSource = [...filteredData].sort((a, b) => b.id - a.id);
+
 
   return (
     <div className="flex">
@@ -216,7 +215,7 @@ function SearchPage() {
         <div className="w-1/2 h-screen bg-slate-200 px-4 pb-4 flex flex-col">
           <span className="py-1 font-semibold text-gray-700 text-sm">Searched Vehicle List</span>
           <div className="w-full h-full bg-slate-400 rounded-md overflow-y-auto">
-            <VehicleListTable dataSource={filteredData} columns={columns} handleRecordClick={handleRecordClick} />
+            <VehicleListTable dataSource={sortedDataSource} columns={columns} handleRecordClick={handleRecordClick} />
           </div>
         </div>
         <div className="w-1/2 h-screen flex flex-col">
