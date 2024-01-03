@@ -1,96 +1,80 @@
-const dataSource = [
-  {
-    key: '1',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '69',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '2',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '70',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '2',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '71',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '4',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '72',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '5',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '73',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '6',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '74',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '7',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '75',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-  {
-    key: '8',
-    license_img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsaAYmo3M_YHFt5J29cHcCKj0s9MFtCl-fiA&usqp=CAU',
-    license_num: '29D01245',
-    speed: '76',
-    time: '11:11:11 11/11/2011',
-    detected_img: 'src/asset/frame.png',
-  },
-];
-
 const columns = [
   {
     title: 'License Plate',
-    dataIndex: 'license_img',
-    key: 'license_img',
-    width: '30%',
-    render: (text) => <img src={text} alt="License Plate" style={{ width: '100px', height: 'auto' }} />,
+    dataIndex: 'result_file_name',
+    key: 'result_file_name',
+    width: '20%',
+    render: (key) => (
+      <img
+        src={`http://127.0.0.1:5000/api/get_image/result_licenses/${key}`}
+        alt="License Plate"
+        style={{ width: '100px', height: 'auto' }}
+      />
+    ),
   },
   {
     title: 'License Plate No.',
-    dataIndex: 'license_num',
-    key: 'license_num',
-    width: '30%',
+    dataIndex: 'license_plate',
+    key: 'license_plate',
+    width: '20%',
+    render: (licensePlate) => <span style={{ fontSize: '17px', fontWeight: 'bold' }}>{licensePlate}</span>,
   },
   {
     title: 'Speed',
     dataIndex: 'speed',
     key: 'speed',
-    width: '10%',
+    width: '20%',
+    render: (speed) => (speed !== 'Not Detected' ? `${speed} km/h` : 'Not Detected'),
   },
   {
     title: 'Time',
     dataIndex: 'time',
     key: 'time',
-    width: '40%',
+    width: '30%',
   },
 ];
 
-export { dataSource, columns };
+const marks = {
+  0: {
+    style: {
+      fontSize: '10px',
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    label: '0km/h',
+  },
+  50: {
+    style: {
+      fontSize: '10px',
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    label: '50km/h',
+  },
+  100: {
+    style: {
+      fontSize: '10px',
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    label: '100km/h',
+  },
+  150: {
+    style: {
+      fontSize: '10px',
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    label: '150km/h',
+  },
+};
+
+const toastOptions = {
+  position: 'bottom-right',
+  autoClose: 3000,
+  pauseOnHover: true,
+  draggable: true,
+  theme: 'light',
+};
+
+export { columns, marks, toastOptions };
