@@ -17,6 +17,7 @@ function MainPage() {
   const [imgSrc, setImgSrc] = useState(noSignalImage);
 
   const [dataSource, setDataSource] = useState([]);
+  const sortedDataSource = [...dataSource].sort((a, b) => b.id - a.id);
 
   const handleRecordClick = (record) => {
     // toast.success('Record Opened!', toastOptions);
@@ -241,7 +242,7 @@ function MainPage() {
         <div className="w-1/2 h-screen bg-slate-200 px-4 pb-4 flex flex-col">
           <span className="py-1 font-semibold text-gray-700 text-sm">Vehicle List</span>
           <div className="w-full h-full bg-white rounded-md overflow-y-auto">
-            <VehicleListTable dataSource={dataSource} columns={columns} handleRecordClick={handleRecordClick} />
+            <VehicleListTable dataSource={sortedDataSource} columns={columns} handleRecordClick={handleRecordClick} />
           </div>
         </div>
       </div>
