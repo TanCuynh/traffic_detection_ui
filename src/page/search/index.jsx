@@ -42,7 +42,7 @@ function SearchPage() {
   };
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/push_into_db', { method: 'GET' })
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/push_into_db`, { method: 'GET' })
       .then((response) => response.json())
       .then((data) => setDataSource(data.data))
       .catch((error) => console.error(error));
@@ -61,7 +61,7 @@ function SearchPage() {
       timeRange,
     };
 
-    fetch('http://127.0.0.1:5000/api/search', {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/search`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -228,7 +228,7 @@ function SearchPage() {
                     <div className="w-1/2">
                       <img
                         className="w-fit h-24"
-                        src={`http://127.0.0.1:5000/api/get_image/result_licenses/${selectedVehicle.result_file_name}`}
+                        src={`${process.env.REACT_APP_API_ENDPOINT}/api/get_image/result_licenses/${selectedVehicle.result_file_name}`}
                         alt="license_img"
                       />
                     </div>
@@ -289,7 +289,7 @@ function SearchPage() {
               <>
                 <div className="w-full h-full bg-slate-400 rounded-md">
                   <img
-                    src={`http://127.0.0.1:5000/api/get_image/result_frames/${selectedVehicle.result_file_name}`}
+                    src={`${process.env.REACT_APP_API_ENDPOINT}/api/get_image/result_frames/${selectedVehicle.result_file_name}`}
                     alt="detected_img"
                   />
                 </div>

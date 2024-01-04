@@ -62,14 +62,14 @@ function MainPage() {
   };
 
   const handleUpdateDatabase = () => {
-    fetch(`http://127.0.0.1:5000/push_into_db`, {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/push_into_db`, {
       method: 'POST',
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
       })
-    fetch('http://127.0.0.1:5000/push_into_db', {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/push_into_db`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -80,7 +80,7 @@ function MainPage() {
   };
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/push_into_db', {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}/push_into_db`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -173,7 +173,7 @@ function MainPage() {
                       <div className="w-1/2">
                         <img
                           className="w-fit h-24"
-                          src={`http://127.0.0.1:5000/api/get_image/result_licenses/${selectedVehicle.result_file_name}`}
+                          src={`${process.env.REACT_APP_API_ENDPOINT}/api/get_image/result_licenses/${selectedVehicle.result_file_name}`}
                           alt="license_img"
                         />
                       </div>
