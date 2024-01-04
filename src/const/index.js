@@ -6,7 +6,7 @@ const columns = [
     width: '20%',
     render: (key) => (
       <img
-        src={`${process.env.REACT_APP_API_ENDPOINT}/api/get_image/result_licenses/${key}`}
+        src={`http://127.0.0.1:5000/api/get_image/result_licenses/${key}`}
         alt="License Plate"
         style={{ width: '100px', height: 'auto' }}
       />
